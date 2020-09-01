@@ -1,0 +1,6 @@
+compile FILE:
+    clang -Wall -lm {{FILE}}
+
+run FILE: 
+    @just compile {{FILE}}
+    ./a.out
