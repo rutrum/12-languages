@@ -1,8 +1,11 @@
+// Challenge 1
+// Sorting algorithms
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
-void merge(size_t s, size_t m, size_t e, size_t len, double A[]) {
+void merge(size_t s, size_t m, size_t e, double A[]) {
     int i = s;
     int j = m;
     int k = 0;
@@ -32,18 +35,18 @@ void merge(size_t s, size_t m, size_t e, size_t len, double A[]) {
     }
 }
 
-void mergesort_part(size_t s, size_t e, size_t len, double A[]) {
+void mergesort_part(size_t s, size_t e, double A[]) {
     if (e - s < 2) {
         return;
     }
     size_t m = (e - s) / 2 + s;
-    mergesort_part(s, m, len, A);
-    mergesort_part(m, e, len, A);
-    merge(s, m, e, len, A);
+    mergesort_part(s, m, A);
+    mergesort_part(m, e, A);
+    merge(s, m, e, A);
 }
 
 void mergesort(size_t len, double A[]) {
-    mergesort_part(0, len, len, A);
+    mergesort_part(0, len, A);
 }
 
 bool is_sorted(size_t len, double A[]) {

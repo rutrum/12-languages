@@ -4,3 +4,6 @@ compile FILE:
 run FILE: 
     @just compile {{FILE}}
     ./a.out
+
+new FILE:
+    cp hello_world.c {{FILE}}
