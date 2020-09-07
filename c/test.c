@@ -5,7 +5,7 @@
 int main() {
     printf("%lu\n", SIZE_MAX);
 
-    double A[4];
+    fputs("d\n", stderr);
 
     return EXIT_SUCCESS;
 }

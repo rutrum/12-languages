@@ -4,54 +4,75 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
-void breadth(int start, int end, bool graph[5][5], int solution[5]) {
-    int j = 0;
-    int cur = start;
-    solution[j] = cur;
-    j += 1;
-    while (cur != end && j < 5) {
-        for (int i = 0; i < 5; i += 1) {
-            //if (i == cur) continue;
-            printf("[%d][%d] = %d\n", cur, i, graph[cur][i]);
-            if (graph[cur][i]) {
-                
-                // check to see if already in solution
-                bool seen = false;
-                for (int k = 0; k < j; k++) {
-                    if (solution[k] == i) {
-                        seen = true;
-                        break;
-                    }
-                }
+typedef bool matrix[5][5];
 
-                if (!seen) {
-                    solution[j] = i;
-                    j += 1;
-                    cur = i;
-                    break;
-                }
+void add_edge(int a, int b, matrix graph) {
+    graph[a][b] = true;
+    graph[b][a] = true;
+}
+
+void remove_edge(int a, int b, matrix graph) {
+    graph[a][b] = false;
+    graph[b][a] = false;
+}
+
+void print_sol(int s[5]) {
+    printf("%i %i %i %i %i\n", s[0], s[1], s[2], s[3], s[4]);
+}
+
+bool search_for(int v, int solution[5]) {
+    for (int i = 0; i < 5; i++) {
+        if (v == solution[i]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// starting at the start node, traverse the matrix graph
+// until every node is found, recursing on a single node before moving
+// to the next
+void breadth_from(int start, matrix graph, int* solved, int solution[5]) {
+    printf("searching at %i\n", start);
+    
+    // Check if every node has been found
+    if (*solved == 5) return;
+
+    for (int i = 0; i < 5; i += 1) {
+        if (i == start) continue;
+        if (graph[start][i]) {
+            if (!search_for(i, solution)) {
+                solution[*solved] = i;
+                *solved += 1;
+                breadth_from(i, graph, solved, solution);
             }
         }
     }
 }
 
+void breadth(matrix graph, int solution[5]) {
+    solution[0] = 0;
+    int solved = 1;
+    breadth_from(0, graph, &solved, solution);
+}
+
 int main() {
-    bool graph[5][5] = {0};
-    graph[1][2] = 1;
-    graph[2][1] = 1;
-    graph[0][2] = 1;
-    graph[2][0] = 1;
-    graph[0][3] = 1;
-    graph[0][3] = 1;
+    matrix graph = {0};
+    add_edge(0, 1, graph);
+    add_edge(1, 3, graph);
+    add_edge(1, 4, graph);
+    add_edge(2, 3, graph);
+    add_edge(0, 3, graph);
 
     int path[5] = {0};
-    breadth(0, 3, graph, path);
+    breadth(graph, path);
     
     printf("%d", path[0]);
     int i = 1;
     while (i < 5 && path[i] > 0) {
-        printf(" -> %d", path[i]);
+        printf(", %d", path[i]);
         i += 1;
     }
     printf("\n");
