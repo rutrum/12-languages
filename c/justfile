@@ -5,5 +5,9 @@ run FILE:
     @just compile {{FILE}}
     ./a.out
 
+runargs FILE *ARGS:
+    @just compile {{FILE}}
+    ./a.out {{ARGS}}
+
 new FILE:
     cp hello_world.c {{FILE}}
