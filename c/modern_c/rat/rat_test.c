@@ -20,6 +20,9 @@ int main(void) {
     s = rat_get_prod(r, s);
     s = rat_get_normal(s);
     print_rat(s);
+    r = rat_get(3, 4);
+    s = rat_get(-2, 5);
+    print_rat(rat_get_sum(r, s));
 
     return EXIT_SUCCESS;
 }

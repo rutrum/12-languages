@@ -47,3 +47,26 @@ rat rat_get_prod(rat r, rat s) {
     };
     return p;
 }
+
+// doesn't work
+rat rat_get_sum(rat r, rat s) {
+    size_t lcm = r.denom * s.denom / gcd(r.denom, s.denom);
+    size_t rnum = r.num * (lcm / r.denom);
+    size_t snum = s.num * (lcm / s.denom);
+
+    size_t num = rnum + snum;
+    size_t sign = r.sign;
+    if (rnum > snum && r.sign && !s.sign) {
+        num = rnum - snum;
+        sign = true;
+    } else if (snum > rnum && s.sign && !r.sign) {
+        num = snum - rnum;
+        sign = true;
+    }
+    rat p = {
+        .num = num,
+        .denom = lcm,
+        .sign = sign,
+    };
+    return p;
+}

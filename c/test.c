@@ -2,10 +2,24 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-int main() {
-    printf("%lu\n", SIZE_MAX);
+// const* cant change data
+// *const cant change pointer
+// const*const can't change either
+void mutate(size_t len, int const*const a) {
+    a[0] = 1;
+    int b = 10;
+    a = &b;
+}
 
-    fputs("d\n", stderr);
+int main() {
+    int a[5] = {0};
+
+    mutate(5, a);
+
+    for (int i = 0; i < 5; i++) {
+        printf("%i ", a[i]);
+    }
+    printf("\n");
 
     return EXIT_SUCCESS;
 }

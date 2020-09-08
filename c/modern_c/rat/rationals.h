@@ -12,3 +12,4 @@ rat rat_get(long long, unsigned long long);
 rat rat_get_normal(rat);
 rat rat_get_extended(rat, size_t);
 rat rat_get_prod(rat, rat);
+rat rat_get_sum(rat, rat);
