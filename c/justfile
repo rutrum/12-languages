@@ -1,4 +1,4 @@
-compile FILE:
+compile *FILE:
     clang -Wall -lm {{FILE}}
 
 run FILE: 
@@ -11,3 +11,7 @@ runargs FILE *ARGS:
 
 new FILE:
     cp hello_world.c {{FILE}}
+
+rat:
+    @just compile modern_c/rat/rat_test.c modern_c/rat/rationals.c
+    ./a.out
