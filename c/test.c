@@ -5,10 +5,9 @@
 // const* cant change data
 // *const cant change pointer
 // const*const can't change either
-void mutate(size_t len, int const*const a) {
+void mutate(size_t len, int const a[len]) {
     a[0] = 1;
-    int b = 10;
-    a = &b;
+    int* b = {0};
 }
 
 int main() {

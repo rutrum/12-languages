@@ -4,6 +4,9 @@
 
 * Pointer mutation: `const*` can't change data, `*const` can't reassign pointer, and `const*const` won't let you mutate either.
 * No modules, so preface every function with a "unique" name (see the rationals.c file)
+* Don't use NULL (just use 0)
+* If you pass a pointer, expect mutation...but not always?  Never know, assume the worst.
+* Writing in javascript preps you to write in C.  Wanna use `void*`?  You've been doing that in javascript for nearly everything.  Just write good code.
 
 ## Program Ideas
 
