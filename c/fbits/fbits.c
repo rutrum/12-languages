@@ -16,7 +16,8 @@ struct Args {
 };
 
 Args parse_args(int argc, char* argv[argc + 1]);
-void print_f32(float);
+void print_bit(unsigned char, size_t);
+void print_f32(Args, float);
 void print_f64(double);
 
 int main(int argc, char* argv[argc + 1]) {
@@ -32,7 +33,7 @@ int main(int argc, char* argv[argc + 1]) {
     float f = atof(argv[1]);
     double d = atof(argv[1]);
 
-    print_f32(f);
+    print_f32(a, f);
     print_f64(d);
 
     return EXIT_SUCCESS;
@@ -40,29 +41,62 @@ int main(int argc, char* argv[argc + 1]) {
 
 Args parse_args(int argc, char* argv[argc + 1]) {
     Args a = {
-        .sign = true,
-        .exponent = true,
-        .mantissa = true,
+        .sign = false,
+        .exponent = false,
+        .mantissa = false,
     };
+
+    for (size_t i = 1; i < argc; i++) {
+        char* arg = argv[i];
+        if (arg[0] == '-') {
+            for (int j = 1; j < strlen(arg); j++) {
+                switch (arg[j]) {
+                    case 's':
+                        a.sign = true; break;
+                    case 'e':
+                        a.exponent = true; break;
+                    case 'm':
+                        a.mantissa = true; break;
+                }
+            }
+        }
+        printf("%s\n", argv[i]);
+    }
+
+    if (!(a.sign || a.exponent || a.mantissa)) {
+        a.sign = a.exponent = a.mantissa = true;
+    }
+
     return a;
 }
 
-void print_f32(float f) {
+void print_f32(Args a, float f) {
     unsigned char* cs = (unsigned char*)&f;
 
     for (size_t i = 0; i < sizeof(float); i++) {
         unsigned char c = cs[sizeof(float) - i - 1];
-        for (size_t j = 0; j < CHAR_BIT; j++) {
-            size_t ord = CHAR_BIT * i + j;
-            if (ord == 1 || ord == 1 + 8) {
-                printf(" ");
+
+        for (size_t j = CHAR_BIT; j; j--) {
+            size_t ord = CHAR_BIT * (i + 1) - j;
+
+            // Only print bits if requested
+            if ((a.sign && ord == 0) 
+                    || (a.exponent && ord >= 1 && ord < 9)
+                    || (a.mantissa && ord >= 9)) {
+                print_bit(c, j - 1);
             }
 
-            size_t b = (c & 1 << (CHAR_BIT - j - 1)) == 0 ? 0 : 1;
-            printf("%zu", b);
+            if ((a.sign && ord == 0) || (a.exponent && ord == 8)) {
+                printf(" ");
+            }
         }
     }
     printf("\n");
+}
+
+void print_bit(unsigned char c, size_t i) {
+    size_t b = (c & 1 << i) == 0 ? 0 : 1;
+    printf("%zu", b);
 }
 
 // Don't cast to types you shouldn't, don't use void*,
