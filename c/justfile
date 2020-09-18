@@ -1,11 +1,10 @@
+default:
+    just run hello_world.c
+
 compile *FILE:
-    clang -Wall -lm {{FILE}}
+    clang -Wall -lm -Wextra -pedantic {{FILE}}
 
-run FILE: 
-    @just compile {{FILE}}
-    ./a.out
-
-runargs FILE *ARGS:
+run FILE *ARGS:
     @just compile {{FILE}}
     ./a.out {{ARGS}}
 
@@ -15,3 +14,6 @@ new FILE:
 rat:
     @just compile modern_c/rat/rat_test.c modern_c/rat/rationals.c
     ./a.out
+
+kilo:
+    just run kilo/kilo.c

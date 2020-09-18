@@ -5,7 +5,7 @@
 // const* cant change data
 // *const cant change pointer
 // const*const can't change either
-void mutate(size_t len, int const a[len]) {
+void mutate(size_t len, int a[len]) {
     a[0] = 1;
     int* b = {0};
 }
@@ -18,7 +18,15 @@ int main() {
     for (int i = 0; i < 5; i++) {
         printf("%i ", a[i]);
     }
-    printf("\n");
+    printf("\nEnter a num: ");
+
+    int b = 0;
+    int result = scanf("%i", &b);
+    if (!!result) {
+        printf("double your num: %i\n", b * 2);
+    } else {
+        printf("thats not an integer!\n");
+    }
 
     return EXIT_SUCCESS;
 }
