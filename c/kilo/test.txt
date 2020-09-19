@@ -1,8 +1,8 @@
-dfdfiasdfasdf:jddfasdfasdf/*** includes ***/
+/*** includes ***/
 
 #define _DEFAULT_SOURCE
 #define _BSD_SOURCE
-dkfdsdfsdf#define _GNU_SOURCE
+#define _GNU_SOURCE
 
 #include <ctype.h>
 #include <errno.h>
