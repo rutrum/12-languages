@@ -1,2 +1,8 @@
-a.out
+# generic
 bin/
+
+# C
+a.out
+
+# Java
+*.class
