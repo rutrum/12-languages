@@ -11,7 +11,7 @@ class Swax {
 
         Monster badguy = new Monster("Gremlin");
 
-        while (p.status == Monster.Status.ALIVE) {
+        while (p.isAlive()) {
             System.out.println("Perform action [attack/heal]:");
             Action action = Action.parseString(input.nextLine());
             
@@ -32,7 +32,7 @@ class Swax {
             }
 
             // Monster's turn
-            if (badguy.status == Monster.Status.ALIVE) {
+            if (badguy.isAlive()) {
                 System.out.println(badguy.summary());
                 System.out.println(badguy.name + " deals 2 damage to you!");
                 p.damage(2);
@@ -48,11 +48,11 @@ class Monster {
         DEAD,
     }
 
-    String name;
-    Status status;
-    int level;
-    int maxHP;
-    int curHP;
+    public String name;
+    private Status status;
+    private int level;
+    private int maxHP;
+    private int curHP;
     
     public Monster(String name) {
         this.name = name;
@@ -81,6 +81,14 @@ class Monster {
         if (this.curHP > this.maxHP) {
             this.curHP = this.maxHP;
         }
+    }
+
+    public boolean isAlive() {
+        return this.status == Status.ALIVE;
+    }
+
+    public boolean isDead() {
+        return this.status == Status.DEAD;
     }
 }
 

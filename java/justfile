@@ -3,3 +3,4 @@ compile FILE:
 
 run FILE:
     javac {{FILE}}
+    (cd $(dirname {{FILE}}); java $(basename {{FILE}} .java))
