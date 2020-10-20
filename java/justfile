@@ -1,0 +1,5 @@
+compile FILE:
+    javac {{FILE}}
+
+run FILE:
+    javac {{FILE}}
